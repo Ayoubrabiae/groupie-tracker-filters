@@ -263,7 +263,7 @@ header nav .dark-mode-btn i {
 .artists>.title {
     text-align: center;
     padding: 0 15px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     font-family: var(--main-font);
     font-size: 40px;
     text-transform: uppercase;
@@ -310,32 +310,6 @@ header nav .dark-mode-btn i {
     text-align: center;
     padding: 10px;
 }
-
-/* Filter Styling */
-.filter-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: var(--act-color);
-    display: flex;
-    font-size: 40px;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    justify-content: space-between;
-    align-items: end;
-    transform: translate(45%, -50%);
-    padding: 15px 10px 5px;
-    box-sizing: content-box;
-    cursor: pointer;
-    transition-duration: var(--drt);
-}
-
-.filter-btn:hover {
-    opacity: 0.8;
-}
-
-.filter-btn .icon {}
 
 /* Top Arrow Styling */
 .top-arrow {

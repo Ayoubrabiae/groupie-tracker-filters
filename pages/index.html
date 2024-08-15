@@ -6,14 +6,16 @@
     <title>Groupie Tracker</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/static/styles/master.css">
+    <link rel="stylesheet" href="/static/styles/filter.css">
 </head>
 <body>
     {{ template "header" }}
     {{ template "hero" }}
 
     <section class="artists">
-        {{ template "filter-btn" }}
         <h2 class="title">Artists</h2>
+        {{ template "filter-btn" }}
+        {{ template "filterHolder" }}
         <div class="container">
             {{ range . }}
                     {{if ne .Id 21}}
@@ -28,5 +30,6 @@
     {{ template "footer"}}
 
     <script type="module" src="/static/scripts/main.js"></script>
+    <script type="module" src="/static/scripts/filter.js"></script>
 </body>
 </html>

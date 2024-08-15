@@ -1,0 +1,20 @@
+{{ define "filterHolder" }}
+    <div class="filters-holder">
+        <div class="filters-container">
+            <div class="filters-exit-btn">
+                <i id="exit" class='bx bx-x'></i>      
+            </div>
+
+            <div class="filter-item-holder">
+                <h3 class="filter-title">Creation Date</h3>
+                <div class="filter-result">1940 - 2014</div>
+                <div class="filter-item">
+                    <input type="range" name="creation-date" />
+                </div>
+            </div>
+
+            <input type="submit" value="Submit" class="filter-submit">
+
+        </div>
+    </div>
+{{ end }}

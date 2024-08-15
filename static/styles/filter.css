@@ -1,0 +1,111 @@
+/* Filter Button Styling */
+.filter-btn {
+    color: var(--act-color);
+    border: 2px solid var(--act-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding: 5px 30px 3px;
+    box-sizing: content-box;
+    cursor: pointer;
+    margin: 0 auto 50px;
+    font-size: 25px;
+    width: fit-content;
+    border-radius: 5px;
+    transition-duration: var(--drt);
+}
+
+.filter-btn:hover {
+    background-color: var(--act-color);
+    color: var(--bg-color);
+}
+
+/* Filter Holder Styling */
+.filters-holder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 20;
+    background-color: rgb(0 29 43 / 32%);
+    transition-duration: var(--drt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters-holder .filters-container {
+    background-color: rgb(255 255 255 / 27%);
+    padding: 40px;
+    border-radius: 10px;
+    position: relative;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.filters-holder .filters-exit-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(-22deg, red, transparent);
+    color: white;
+    padding: 2px 7px 0px;
+    font-size: 20px;
+    cursor: pointer;
+    transition-duration: var(--drt);
+}
+
+.filters-holder .filters-exit-btn:hover {
+    background-color: red;
+}
+
+.filter-item-holder {
+    text-align: center;
+    backdrop-filter: brightness(0.3);
+    padding: 10px 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.filter-item-holder .filter-title {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.filter-item-holder .filter-result {
+    border-radius: 2px;
+    width: fit-content;
+    margin: 0 auto 20px;
+    border: 1px dashed;
+    padding: 8px 20px;
+}
+
+.filter-item-holder .filter-item {}
+
+.filter-item-holder .filter-item input {
+    max-width: 100%;
+    width: 500px;
+}
+
+.filters-holder input[type="submit"] {
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    width: fit-content;
+    color: var(--bg-color);
+    background-color: var(--act-color);
+    margin: 0 auto;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition-duration: var(--drt);
+}
+
+.filters-holder input[type="submit"]:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
