@@ -86,10 +86,64 @@
 
 .filter-item-holder .filter-item {}
 
-.filter-item-holder .filter-item input {
-    max-width: 100%;
+.filter-item .slider {
     width: 500px;
+    max-width: 100%;
+    height: 5px;
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    position: relative;
 }
+
+.filter-item .slider .progress {
+    position: absolute;
+    background-color: var(--act-color);
+    height: 100%;
+    border-radius: 5px;
+    left: 0%;
+    right: 0%;
+}
+
+.filter-item .range-input {
+    position: relative;
+}
+
+.filter-item .range-input input {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    top: -5px;
+    left: 0;
+    background: none;
+    pointer-events: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.filter-item .range-input input[type="range"]::-webkit-slider-thumb{
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    background: var(--act-color);
+    pointer-events: auto;
+    -webkit-appearance: none;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  }
+  .filter-item .range-input input[type="range"]::-moz-range-thumb{
+    height: 17px;
+    width: 17px;
+    border: none;
+    border-radius: 50%;
+    background: var(--act-color);
+    pointer-events: auto;
+    -moz-appearance: none;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  }
+
+.filter-item .range-input .range-min {}
+
+.filter-item .range-input .range-max {}
 
 .filters-holder input[type="submit"] {
     border: none;
