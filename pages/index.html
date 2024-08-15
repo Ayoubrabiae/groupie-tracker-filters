@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupie Tracker</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/styles/master.css">
+</head>
+<body>
+    {{ template "header" }}
+    {{ template "hero" }}
+
+    <section class="artists">
+        {{ template "filter-btn" }}
+        <h2 class="title">Artists</h2>
+        <div class="container">
+            {{ range . }}
+                    {{if ne .Id 21}}
+                    {{ template "card" . }}
+                    {{end}}
+            {{ end }}
+        </div>
+    </section>
+    
+    {{ template "topArrow" }}
+
+    {{ template "footer"}}
+
+    <script type="module" src="/static/scripts/main.js"></script>
+</body>
+</html>

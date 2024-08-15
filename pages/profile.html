@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Artist Infos</title>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="/static/styles/master.css">
+        <link rel="stylesheet" href="/static/styles/profile.css">
+        <script src="/static/scripts/main.js" defer></script>
+    </head>
+<body>
+    <section class="profile">
+        <i id="exit" class='bx bx-left-arrow-alt'></i>
+        <div class="container">
+            <div class="info">
+                <div class="info-child members">
+                    <h2 class="info-child-title">Members</h2>
+                    <div class="members-container info-child-scroll">
+                        {{range .Artist.Members}}
+                        <p class="member info-child-item">{{.}}</p>
+                        {{end}}
+                    </div>
+                </div>
+
+                <div class="info-child creation--first-album-date">
+                    <div class="holder">
+                        <h2 class="info-child-title">Creation Date</h2>
+                        <p>{{.Artist.CreationDate}}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="holder">
+                        <h2 class="info-child-title">First Album</h2>
+                        <p>{{.Artist.FirstAlbum}}</p>
+                    </div>
+                </div>
+                
+                <div class="info-child locations">                
+                    <h2 class="info-child-title">Locations</h2>
+                    <div class="locations-container info-child-scroll">
+                        {{range .Locations.Locations}}
+                        <a href="/locations/{{.}}" target="_blank" class="location-item info-child-item">{{.}}</a>
+                        {{end}}
+                    </div>
+                </div>
+
+                <div class="info-child info-child-scroll">
+                    <img src="{{.Artist.Image}}">
+                    <h2 class="info-child-title">{{ .Artist.Name }}</h2>
+                </div>
+
+                <div class="info-child">
+                    <h2 class="info-child-title">Dates</h2>
+                    <div class="dates-container info-child-scroll">
+                        {{ range .Dates.Dates}}
+                            <p class="info-child-item">{{.}}</p>
+                        {{end}}
+                    </div>
+                </div>
+
+                <div class="info-child relations">
+                    <h2 class="info-child-title">Relations</h2>
+                    
+                    <div class="relations-container info-child-scroll">
+                        {{range  $location, $dates := .Relations.DatesLocations}}
+    
+                            <div class="location-dates">
+                                <h3 class="location-dates-title">{{$location}}</h3>
+                                
+                                <div class="location-dates-container">
+                                    {{range $dates}}
+                                        
+                                        <p class="location-dates-item info-child-item">{{.}}</p>
+                                        
+                                    {{end}}
+                                </div>
+                            </div>
+                        
+                        {{end}}
+                    </div>
+                </div>
+        </div>
+        <i id="next" class='bx bx-chevron-right'></i>
+        <i id="prev" class='bx bx-chevron-left'></i>
+        </div>
+    </section>
+</body>
+</html>

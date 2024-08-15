@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - {{.Code}}</title>
+    <link rel="stylesheet" href="/static/styles/master.css">
+</head>
+<body>
+    <div class="container error-container">
+        <div class="error-image">
+            <img src="/static/images/error.png" alt="error image">
+        </div>
+        <h1 class="error-title">{{.Message}} - {{.Code}}</h1>
+        {{ if ne .Code 500 }}
+            <a class="error-back-btn" href="/">Go Back</a>
+        {{ end }}
+    </div>
+    <script src="/static/scripts/main.js"></script>
+</body>
+</html>

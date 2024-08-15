@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="/static/styles/master.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {{ template "header" }}
+
+    <section class="about">
+        <div class="affich overlay">
+            <div class="container">
+                <h2 class="title">#Who we are?</h2>
+                <p>"The only way to do great work is to love what you do." - Steve Jobs</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="authors">
+                <h2 class="title">Authors</h2>
+                <div class="authors-container">
+                    <div class="card">
+                        <div class="image">
+                            <img src="/static/images/user2.png" alt="author image">
+                        </div>
+                        <h3 class="name">Hamza Outayb</h3>
+                    </div>
+                    <div class="card">
+                        <div class="image">
+                            <img src="/static/images/user.png" alt="author image">
+                        </div>
+                        <h3 class="name">Ayoub Rabya</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    {{ template "footer" }}
+    <script type="module" src="/static/scripts/main.js"></script>
+</body>
+</html>
