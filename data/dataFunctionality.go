@@ -1,6 +1,7 @@
 package data
 
 import (
+	"errors"
 	"fmt"
 
 	"groupie-tracker/funcs"
@@ -73,6 +74,25 @@ func LoadLocations() (map[string]bool, error) {
 	for _, item := range locationsHolder.Index {
 		for _, element := range item.Locations {
 			res[element] = true
+		}
+	}
+
+	return res, nil
+}
+
+func GetMinMaxCreationDate(artists []ArtistType) (map[string]int, error) {
+	res := map[string]int{}
+	if len(artists) < 1 {
+		return res, errors.New("artists slice is empty")
+	}
+
+	res["min"] = artists[0].CreationDate
+
+	for _, artist := range artists {
+		if artist.CreationDate < res["min"] {
+			res["min"] = artist.CreationDate
+		} else if artist.CreationDate > res["max"] {
+			res["max"] = artist.CreationDate
 		}
 	}
 

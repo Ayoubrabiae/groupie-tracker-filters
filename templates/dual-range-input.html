@@ -1,0 +1,11 @@
+{{ define "dualRangeInput" }}
+    <div class="filter-item">
+        <div class="slider">
+            <div class="progress"></div>
+        </div>
+        <div class="range-input">
+            <input type="range" class="range-min" min="{{.MinCreationDate}}" max="{{.MaxCreationDate}}" value="{{.MinCreationDate}}" step="1">
+            <input type="range" class="range-max" min="{{.MinCreationDate}}" max="{{.MaxCreationDate}}" value="{{.MaxCreationDate}}" step="1">
+        </div>
+    </div>
+{{ end }}

@@ -5,18 +5,10 @@
                 <i id="exit" class='bx bx-x'></i>      
             </div>
 
-            <div class="filter-item-holder">
+            <div class="filter-item-holder creation-filter">
                 <h3 class="filter-title">Creation Date</h3>
-                <div class="filter-result">1940 - 2015</div>
-                    <div class="filter-item">
-                        <div class="slider">
-                            <div class="progress"></div>
-                        </div>
-                        <div class="range-input">
-                            <input type="range" class="range-min" min="1940" max="2015" value="1940" step="1">
-                            <input type="range" class="range-max" min="1940" max="2015" value="2015" step="1">
-                        </div>
-                    </div>
+                <div class="filter-result">{{.Creation.MinCreationDate}} - {{.Creation.MaxCreationDate}}</div>
+                    {{ template "dualRangeInput" .Creation}}
                 </div>
 
             <input type="submit" value="Submit" class="filter-submit">

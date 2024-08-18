@@ -27,12 +27,16 @@
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 20;
     background-color: rgb(0 29 43 / 32%);
-    transition-duration: var(--drt);
     display: flex;
     align-items: center;
     justify-content: center;
+    display: none;
+    z-index: 20;
+}
+
+.filters-holder.show {
+    display: flex;
 }
 
 .filters-holder .filters-container {

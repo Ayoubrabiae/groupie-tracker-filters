@@ -42,7 +42,39 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tmp.Execute(w, artists)
+	minmaxCreation, err := data.GetMinMaxCreationDate(artists)
+	if err != nil {
+		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
+		return
+	}
+
+	homeData := struct {
+		Artists []data.ArtistType
+		Filter  struct {
+			Creation struct {
+				MinCreationDate int
+				MaxCreationDate int
+			}
+		}
+	}{
+		Artists: artists,
+		Filter: struct {
+			Creation struct {
+				MinCreationDate int
+				MaxCreationDate int
+			}
+		}{
+			Creation: struct {
+				MinCreationDate int
+				MaxCreationDate int
+			}{
+				MinCreationDate: minmaxCreation["min"],
+				MaxCreationDate: minmaxCreation["max"],
+			},
+		},
+	}
+
+	err = tmp.Execute(w, homeData)
 	if err != nil {
 		fmt.Println("When we excute the html", err)
 		return
