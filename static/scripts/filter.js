@@ -18,6 +18,24 @@ const creationRangeInputs = document.querySelectorAll(".creation-filter .range-i
 const creationRange = document.querySelector(".slider .progress")
 const creationResultRange = document.querySelector(".filter-item-holder .filter-result")
 const gap = 3
+
+const rangeLoad = (rangeInputs, range, resultRange) => {
+    console.log("Hi I am here")
+    let minValue = parseInt(rangeInputs[0].value),
+    maxValue = parseInt(rangeInputs[1].value)
+
+    resultRange.textContent = `${minValue} - ${maxValue}`
+
+    const gapValue = rangeInputs[0].max - rangeInputs[0].min
+    const minGabValue = ((rangeInputs[0].max - rangeInputs[0].value) / gapValue) * 100
+    const maxGabValue = 100-((rangeInputs[0].max - rangeInputs[1].value) / gapValue) *100
+
+    range.style.left = 100-minGabValue+"%"
+    range.style.right = 100-maxGabValue+"%"
+}
+
+rangeLoad(creationRangeInputs, creationRange, creationResultRange)
+
 const rangeFunc = (e, rangeInputs, resultRange, range, gap) => {
     let minValue = parseInt(rangeInputs[0].value),
     maxValue = parseInt(rangeInputs[1].value)

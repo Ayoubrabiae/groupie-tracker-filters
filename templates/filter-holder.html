@@ -1,6 +1,6 @@
 {{ define "filterHolder" }}
     <div class="filters-holder">
-        <div class="filters-container">
+        <form action="/" method="get" class="filters-container">
             <div class="filter-header">
                 <h2 class="filter-title">Filters</h2>
                 <div class="filters-exit-btn">
@@ -16,6 +16,6 @@
 
             <input type="submit" value="Submit" class="filter-submit">
 
-        </div>
+        </form>
     </div>
 {{ end }}

@@ -17,7 +17,7 @@ func main() {
 		return
 	}
 
-	port := "8081"
+	port := "8082"
 
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/artists/", handlers.ProfileHandler)

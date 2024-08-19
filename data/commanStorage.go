@@ -39,6 +39,15 @@ type ArtistInfo struct {
 	Relations RelationsType
 }
 
+type FilterType struct {
+	Creation struct {
+		MinCreationDate int
+		MaxCreationDate int
+		MinValue        string
+		MaxValue        string
+	}
+}
+
 var (
 	MainData       MainType
 	CoordinatesApi string = "https://photon.komoot.io/api/?q="

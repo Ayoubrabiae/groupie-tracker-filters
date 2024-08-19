@@ -3,6 +3,7 @@ package data
 import (
 	"errors"
 	"fmt"
+	"strconv"
 
 	"groupie-tracker/funcs"
 )
@@ -97,4 +98,19 @@ func GetMinMaxCreationDate(artists []ArtistType) (map[string]int, error) {
 	}
 
 	return res, nil
+}
+
+func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
+	res := []ArtistType{}
+
+	min, _ := strconv.Atoi(p["min-creation"][0])
+	max, _ := strconv.Atoi(p["max-creation"][0])
+
+	for _, item := range artists {
+		if item.CreationDate >= min && item.CreationDate <= max {
+			res = append(res, item)
+		}
+	}
+
+	return res
 }
