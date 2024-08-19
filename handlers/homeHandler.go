@@ -48,6 +48,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	
+
 	homeData := struct {
 		Artists []data.ArtistType
 		Filter  struct {
