@@ -17,11 +17,8 @@ func main() {
 		return
 	}
 
-	port := "8080"
+	port := "8081"
 
-	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, r.URL.Query())
-	})
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/artists/", handlers.ProfileHandler)
 	http.HandleFunc("/about", handlers.AboutHandler)
