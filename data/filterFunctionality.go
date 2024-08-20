@@ -124,6 +124,7 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 	if len(p["max-first-album"]) != 0 {
 		maxCreationValue = p["max-first-album"][0]
 	}
+	
 	//////////////////////////////////////////////////////////
 
 	return FilterType{
@@ -134,6 +135,8 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 			MaxValue: maxCreationValue,
 		},
 		FirstAlbumFilter: FirstAlbumFilterType{
+			Min:      minmaxFirstAlbum["min"],
+			Max:      minmaxFirstAlbum["max"],
 			MinValue: minFirstAlbumValue,
 			MaxValue: maxFirstAlbumValue,
 		},

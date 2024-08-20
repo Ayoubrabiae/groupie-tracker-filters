@@ -1,0 +1,11 @@
+{{ define "firstAlbumRange" }}
+    <div class="filter-item">
+        <div class="slider">
+            <div class="progress"></div>
+        </div>
+        <div class="range-input">
+            <input type="range" class="range-min" name="min-first-album" min="{{.Min}}" max="{{.Max}}" value="{{.MinValue}}" step="1">
+            <input type="range" class="range-max" name="max-first-album" min="{{.Min}}" max="{{.Max}}" value="{{.MaxValue}}" step="1">
+        </div>
+    </div>
+{{ end }}

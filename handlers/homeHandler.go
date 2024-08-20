@@ -48,8 +48,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(data.GetMinMaxFirstAlbum(artists))
-
 	if len(r.URL.Query()) != 0 {
 		artists, err = data.FilterArtists(artists, r.URL.Query())
 		if err != nil {
