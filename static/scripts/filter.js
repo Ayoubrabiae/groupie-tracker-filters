@@ -14,10 +14,14 @@ filterBtn.addEventListener("click", showFilters)
 filterCancelBtn.addEventListener("click", hideFilters)
 
 // Range functionality
-const creationRangeInputs = document.querySelectorAll(".creation-filter .range-input input")
-const creationRange = document.querySelector(".slider .progress")
-const creationResultRange = document.querySelector(".filter-item-holder .filter-result")
 const gap = 3
+const creationRangeInputs = document.querySelectorAll(".creation-filter .range-input input")
+const creationRange = document.querySelector(".creation-filter .slider .progress")
+const creationResultRange = document.querySelector(".creation-filter .filter-result")
+
+const firstAlbumRangeInputs = document.querySelectorAll(".first-album-filter .range-input input")
+const firstAlbumRange = document.querySelector(".first-album-filter .slider .progress")
+const firstAlbumResultRange = document.querySelector(".first-album-filter .filter-result")
 
 const rangeFunc = (e, rangeInputs, resultRange, range, gap) => {
     let minValue = parseInt(rangeInputs[0].value),
@@ -44,7 +48,12 @@ const rangeFunc = (e, rangeInputs, resultRange, range, gap) => {
 }
 
 rangeFunc(null, creationRangeInputs, creationResultRange, creationRange, gap)
+rangeFunc(null, firstAlbumRangeInputs, firstAlbumResultRange, firstAlbumRange, gap)
 
 creationRangeInputs.forEach(input => {
     input.addEventListener("input", (e) => {rangeFunc(e, creationRangeInputs, creationResultRange, creationRange, gap)})
 });
+
+firstAlbumRangeInputs.forEach(input => {
+    input.addEventListener("input", (e) => {rangeFunc(e, firstAlbumRangeInputs, firstAlbumResultRange, firstAlbumRange, gap)})
+})
