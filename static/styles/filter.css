@@ -170,3 +170,13 @@
     transition-duration: var(--drt);
     color: inherit;
 }
+
+.filter-error {
+    grid-column: 1 / 5;
+    border: 1px solid;
+    text-align: center;
+    font-size: 25px;
+    color: red;
+    padding: 20px 30px;
+    margin: 0 auto;
+}

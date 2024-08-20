@@ -56,8 +56,22 @@ func GetMinMaxFirstAlbum(artists []ArtistType) (map[string]int, error) {
 	return res, nil
 }
 
-// Filter Artists based on the creation date
-func CreationFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string) ([]ArtistType, error) {
+// Get min and max values for ranges inputs
+func GetMinMaxValues(minmax map[string]int, min, max []string) (string, string) {
+	minValue := strconv.Itoa(minmax["min"])
+	maxValue := strconv.Itoa(minmax["max"])
+	if len(min) != 0 {
+		minValue = min[0]
+	}
+	if len(maxValue) != 0 {
+		maxValue = max[0]
+	}
+
+	return minValue, maxValue
+}
+
+// Help us to filter Artists based on the creation and the first album date
+func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string) ([]ArtistType, error) {
 	res := []ArtistType{}
 
 	if len(minCreaionDate) == 0 || len(maxCreationDate) == 0 {
@@ -85,7 +99,12 @@ func CreationFilter(artists []ArtistType, minCreaionDate, maxCreationDate []stri
 
 // Filter Artists Used Functions Above
 func FilterArtists(artists []ArtistType, p map[string][]string) ([]ArtistType, error) {
-	res, err := CreationFilter(artists, p["min-creation"], p["max-creation"])
+	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
+	if err != nil {
+		return []ArtistType{}, err
+	}
+
+	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
 	if err != nil {
 		return []ArtistType{}, err
 	}
@@ -100,14 +119,7 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 		return FilterType{}, err
 	}
 
-	minCreationValue := strconv.Itoa(minmaxCreation["min"])
-	maxCreationValue := strconv.Itoa(minmaxCreation["max"])
-	if len(p["min-creation"]) != 0 {
-		minCreationValue = p["min-creation"][0]
-	}
-	if len(p["max-creation"]) != 0 {
-		maxCreationValue = p["max-creation"][0]
-	}
+	minCreationValue, maxCreationValue := GetMinMaxValues(minmaxCreation, p["min-creation"], p["max-creation"])
 
 	//////////////////////////////////////////////////////////
 
@@ -116,15 +128,8 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 		return FilterType{}, err
 	}
 
-	minFirstAlbumValue := strconv.Itoa(minmaxFirstAlbum["min"])
-	maxFirstAlbumValue := strconv.Itoa(minmaxFirstAlbum["max"])
-	if len(p["min-first-album"]) != 0 {
-		minCreationValue = p["min-first-album"][0]
-	}
-	if len(p["max-first-album"]) != 0 {
-		maxCreationValue = p["max-first-album"][0]
-	}
-	
+	minFirstAlbumValue, maxFirstAlbumValue := GetMinMaxValues(minmaxFirstAlbum, p["min-first-album"], p["max-first-album"])
+
 	//////////////////////////////////////////////////////////
 
 	return FilterType{

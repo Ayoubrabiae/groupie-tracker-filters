@@ -17,11 +17,15 @@
         {{ template "filter-btn" }}
         {{ template "filterHolder" .Filter }}
         <div class="container">
-            {{ range .Artists }}
-                    {{if ne .Id 21}}
-                    {{ template "card" . }}
-                    {{end}}
-            {{ end }}
+            {{if .Artists}}
+                {{ range .Artists }}
+                        {{if ne .Id 21}}
+                        {{ template "card" . }}
+                        {{end}}
+                {{ end }}
+            {{else}}
+                <p class="filter-error">Sorry We doesn't found any matches</p>
+            {{end}}
         </div>
     </section>
     
