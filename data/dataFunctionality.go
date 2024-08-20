@@ -1,9 +1,7 @@
 package data
 
 import (
-	"errors"
 	"fmt"
-	"strconv"
 
 	"groupie-tracker/funcs"
 )
@@ -79,38 +77,4 @@ func LoadLocations() (map[string]bool, error) {
 	}
 
 	return res, nil
-}
-
-func GetMinMaxCreationDate(artists []ArtistType) (map[string]int, error) {
-	res := map[string]int{}
-	if len(artists) < 1 {
-		return res, errors.New("artists slice is empty")
-	}
-
-	res["min"] = artists[0].CreationDate
-
-	for _, artist := range artists {
-		if artist.CreationDate < res["min"] {
-			res["min"] = artist.CreationDate
-		} else if artist.CreationDate > res["max"] {
-			res["max"] = artist.CreationDate
-		}
-	}
-
-	return res, nil
-}
-
-func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
-	res := []ArtistType{}
-
-	min, _ := strconv.Atoi(p["min-creation"][0])
-	max, _ := strconv.Atoi(p["max-creation"][0])
-
-	for _, item := range artists {
-		if item.CreationDate >= min && item.CreationDate <= max {
-			res = append(res, item)
-		}
-	}
-
-	return res
 }

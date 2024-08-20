@@ -39,13 +39,23 @@ type ArtistInfo struct {
 	Relations RelationsType
 }
 
+type CreationFilterType struct {
+	Min      int
+	Max      int
+	MinValue string
+	MaxValue string
+}
+
+type FirstAlbumFilterType struct {
+	Min      int
+	Max      int
+	MinValue string
+	MaxValue string
+}
+
 type FilterType struct {
-	Creation struct {
-		MinCreationDate int
-		MaxCreationDate int
-		MinValue        string
-		MaxValue        string
-	}
+	CreationFilter   CreationFilterType
+	FirstAlbumFilter FirstAlbumFilterType
 }
 
 var (

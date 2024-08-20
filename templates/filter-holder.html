@@ -1,6 +1,7 @@
 {{ define "filterHolder" }}
     <div class="filters-holder">
         <form action="/" method="get" class="filters-container">
+            <!-- Header -->
             <div class="filter-header">
                 <h2 class="filter-title">Filters</h2>
                 <div class="filters-exit-btn">
@@ -8,11 +9,19 @@
                 </div>
             </div>
 
+            <!-- Creation Filter -->
             <div class="filter-item-holder creation-filter">
                 <h3 class="filter-title">Creation Date</h3>
-                <div class="filter-result">{{.Creation.MinCreationDate}} - {{.Creation.MaxCreationDate}}</div>
-                    {{ template "dualRangeInput" .Creation}}
-                </div>
+                <div class="filter-result">{{.CreationFilter.Min}} - {{.CreationFilter.Max}}</div>
+                    {{ template "creationRange" .CreationFilter}}
+            </div>
+
+            <!-- First Album Filter -->
+            <div class="filter-item-holder first-album-filter">
+                <h3 class="filter-title">First Album Date</h3>
+                <div class="filter-result">{{.CreationFilter.Min}} - {{.CreationFilter.Max}}</div>
+                    {{ template "firstAlbumRange" .FirstAlbumFilter}}
+            </div>
 
             <input type="submit" value="Submit" class="filter-submit">
 

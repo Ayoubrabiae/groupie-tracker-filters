@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"strconv"
 
 	"groupie-tracker/data"
 	"groupie-tracker/funcs"
@@ -43,22 +42,20 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	minmaxCreation, err := data.GetMinMaxCreationDate(artists)
+	filterParams, err := data.GetFilterParams(artists, r.URL.Query())
 	if err != nil {
 		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
 		return
 	}
 
+	fmt.Println(data.GetMinMaxFirstAlbum(artists))
+
 	if len(r.URL.Query()) != 0 {
-		artists = data.FilterArtists(artists, r.URL.Query())
-	}
-	minCreationValue := strconv.Itoa(minmaxCreation["min"])
-	maxCreationValue := strconv.Itoa(minmaxCreation["max"])
-	if len(r.URL.Query()["min-creation"]) != 0 {
-		minCreationValue = r.URL.Query()["min-creation"][0]
-	}
-	if len(r.URL.Query()["max-creation"]) != 0 {
-		maxCreationValue = r.URL.Query()["max-creation"][0]
+		artists, err = data.FilterArtists(artists, r.URL.Query())
+		if err != nil {
+			ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
+			return
+		}
 	}
 
 	homeData := struct {
@@ -66,19 +63,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		Filter  data.FilterType
 	}{
 		Artists: artists,
-		Filter: data.FilterType{
-			Creation: struct {
-				MinCreationDate int
-				MaxCreationDate int
-				MinValue        string
-				MaxValue        string
-			}{
-				MinCreationDate: minmaxCreation["min"],
-				MaxCreationDate: minmaxCreation["max"],
-				MinValue:        minCreationValue,
-				MaxValue:        maxCreationValue,
-			},
-		},
+		Filter:  filterParams,
 	}
 
 	err = tmp.Execute(w, homeData)
