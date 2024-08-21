@@ -94,8 +94,6 @@
     padding: 8px 20px;
 }
 
-.filter-item-holder .filter-item {}
-
 .filter-item .slider {
     width: 500px;
     max-width: 100%;
@@ -151,10 +149,6 @@
     -moz-appearance: none;
     box-shadow: 0 0 6px rgba(0,0,0,0.05);
 }
-
-.filter-item .range-input .range-min {}
-
-.filter-item .range-input .range-max {}
 
 .filters-holder .submit-holder {
     display: flex;
