@@ -156,19 +156,34 @@
 
 .filter-item .range-input .range-max {}
 
-.filters-holder input[type="submit"] {
+.filters-holder .submit-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filters-holder input[type="submit"], .filters-holder .reset {
     border: none;
-    font-weight: bold;
     font-size: 16px;
     border-radius: 5px;
     width: fit-content;
-    color: var(--bg-color);
     background-color: var(--act-color);
-    margin: 0 auto;
     padding: 9px 20px;
     cursor: pointer;
-    transition-duration: var(--drt);
     color: inherit;
+    font-family: var(--body-font);
+    border: 1px solid var(--act-color);
+    transition-duration: var(--drt);
+}
+
+.filters-holder input[type="submit"]:hover, .filters-holder .reset:hover {
+    opacity: 0.7;
+}
+
+.filters-holder .reset {
+    background-color: transparent;
+    border-color: currentColor;
 }
 
 .filter-error {
