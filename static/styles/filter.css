@@ -206,9 +206,6 @@
     justify-content: center;
 }
 
-.members-filter .member-input {
-}
-
 .members-filter .member-input input {
     display: none;
 }
@@ -216,8 +213,11 @@
     border: 0.6px solid;
     padding: 3px 15px;
     user-select: none;
+    cursor: pointer;
 }
 
 .members-filter .member-input input:checked + label {
     background-color: var(--act-color);
+    border-color: var(--act-color);
+    color: var(--bg-color);
 }
