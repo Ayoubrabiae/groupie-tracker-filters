@@ -63,7 +63,7 @@ func GetMinMaxValues(minmax map[string]int, min, max []string) (string, string) 
 	if len(min) != 0 {
 		minValue = min[0]
 	}
-	if len(maxValue) != 0 {
+	if len(max) != 0 {
 		maxValue = max[0]
 	}
 
