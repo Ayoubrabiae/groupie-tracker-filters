@@ -49,11 +49,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(r.URL.Query()) != 0 {
-		artists, err = data.FilterArtists(artists, r.URL.Query())
-		if err != nil {
-			ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
-			return
-		}
+		artists = data.FilterArtists(artists, r.URL.Query())
 	}
 
 	homeData := struct {

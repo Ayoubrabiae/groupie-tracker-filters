@@ -53,9 +53,15 @@ type FirstAlbumFilterType struct {
 	MaxValue string
 }
 
+type MembersFilterType struct {
+	MembersSizes   map[int]bool
+	MembersChecked map[int]bool
+}
+
 type FilterType struct {
 	CreationFilter   CreationFilterType
 	FirstAlbumFilter FirstAlbumFilterType
+	MembersFilter    MembersFilterType
 }
 
 var (

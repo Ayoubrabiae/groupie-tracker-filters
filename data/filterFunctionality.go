@@ -70,6 +70,37 @@ func GetMinMaxValues(minmax map[string]int, min, max []string) (string, string) 
 	return minValue, maxValue
 }
 
+// Get Members sizes from artists
+func GetMembersSizes(artists []ArtistType) map[int]bool {
+	res := map[int]bool{}
+
+	for _, artist := range artists {
+		res[len(artist.Members)] = true
+	}
+
+	return res
+}
+
+// Get Members Sizes That we check
+func GetCheckedMembers(members []string) (map[int]bool, error) {
+	res := map[int]bool{}
+
+	for _, m := range members {
+		mInt, err := strconv.Atoi(m)
+		if err != nil {
+			return map[int]bool{}, err
+		}
+
+		res[mInt] = true
+	}
+
+	return res, nil
+}
+
+// Filter Artists based on members size 
+func MembersFilter(artists []ArtistType, membersSizes []string) {
+}
+
 // Help us to filter Artists based on the creation and the first album date
 func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string) ([]ArtistType, error) {
 	res := []ArtistType{}
@@ -98,18 +129,18 @@ func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string)
 }
 
 // Filter Artists Used Functions Above
-func FilterArtists(artists []ArtistType, p map[string][]string) ([]ArtistType, error) {
+func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
 	if err != nil {
-		return []ArtistType{}, err
+		return []ArtistType{}
 	}
 
 	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
 	if err != nil {
-		return []ArtistType{}, err
+		return []ArtistType{}
 	}
 
-	return res, nil
+	return res
 }
 
 // Get All Filter Params Like range values and checkbox that we checked
@@ -132,6 +163,14 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 
 	//////////////////////////////////////////////////////////
 
+	membersSizes := GetMembersSizes(artists)
+	checkedMembers, err := GetCheckedMembers(p["members"])
+	if err != nil {
+		return FilterType{}, err
+	}
+
+	//////////////////////////////////////////////////////////
+
 	return FilterType{
 		CreationFilter: CreationFilterType{
 			Min:      minmaxCreation["min"],
@@ -144,6 +183,10 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 			Max:      minmaxFirstAlbum["max"],
 			MinValue: minFirstAlbumValue,
 			MaxValue: maxFirstAlbumValue,
+		},
+		MembersFilter: MembersFilterType{
+			MembersSizes:   membersSizes,
+			MembersChecked: checkedMembers,
 		},
 	}, nil
 }
