@@ -41,6 +41,20 @@
                 </div>
             </div>
 
+            <!-- Locations Filter -->
+            <div class="filter-item-holder first-album-filter">
+                <h3 class="filter-title">First Album Date</h3>
+                <div class="filter-item-container">
+                    {{ range $key, $value := .LocationsFilter.Locations }}
+                        <div class="member-input">
+                            <input
+                             type="checkbox" name="locations" id="location-{{$key}}" value="{{$key}}">
+                            <label for="location-{{$key}}">{{$key}}</label>
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+
             <!-- Submit Holder -->
             <div class="submit-holder">
                 <a class="reset" href="/">Reset</a>

@@ -198,6 +198,13 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 
 	//////////////////////////////////////////////////////////
 
+	locations, err := LoadLocations()
+	if err != nil {
+		return FilterType{}, err
+	}
+
+	//////////////////////////////////////////////////////////
+
 	return FilterType{
 		CreationFilter: CreationFilterType{
 			Min:      minmaxCreation["min"],
@@ -214,6 +221,9 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 		MembersFilter: MembersFilterType{
 			MembersSizes:   membersSizes,
 			MembersChecked: checkedMembers,
+		},
+		LocationsFilter: LocationsFilterType{
+			Locations: locations,
 		},
 	}, nil
 }

@@ -58,10 +58,16 @@ type MembersFilterType struct {
 	MembersChecked map[int]bool
 }
 
+type LocationsFilterType struct {
+	Locations        map[string]bool
+	LocationsChecked map[string]bool
+}
+
 type FilterType struct {
 	CreationFilter   CreationFilterType
 	FirstAlbumFilter FirstAlbumFilterType
 	MembersFilter    MembersFilterType
+	LocationsFilter  LocationsFilterType
 }
 
 var (
