@@ -2,12 +2,14 @@ package handlers
 
 import (
 	"net/http"
-	"strings"
+	"os"
 )
 
 func StaticHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if strings.HasSuffix(r.URL.Path, "/") {
+		_, err := os.Open("./static/styles/master")
+
+		if os.IsNotExist(err) {
 			ErrorHandler(w, "Page Not Found", http.StatusNotFound)
 			return
 		}
