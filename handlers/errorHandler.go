@@ -7,7 +7,6 @@ import (
 )
 
 func ErrorHandler(w http.ResponseWriter, errorMsg string, code int) {
-	fmt.Println("Error Page Handled Successfuly")
 	w.WriteHeader(code)
 	tmpl, err := template.ParseFiles("./pages/error.html")
 	if err != nil {
