@@ -97,8 +97,30 @@ func GetCheckedMembers(members []string) (map[int]bool, error) {
 	return res, nil
 }
 
-// Filter Artists based on members size 
-func MembersFilter(artists []ArtistType, membersSizes []string) {
+// Filter Artists based on members size
+func MembersFilter(artists []ArtistType, membersSizes []string) ([]ArtistType, error) {
+	res := []ArtistType{}
+
+	if len(membersSizes) == 0 {
+		return artists, nil
+	}
+
+	for _, artist := range artists {
+		for _, size := range membersSizes {
+
+			intSize, err := strconv.Atoi(size)
+			if err != nil {
+				return []ArtistType{}, err
+			}
+
+			if len(artist.Members) == intSize {
+				res = append(res, artist)
+			}
+
+		}
+	}
+
+	return res, nil
 }
 
 // Help us to filter Artists based on the creation and the first album date
@@ -136,6 +158,11 @@ func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 	}
 
 	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	res, err = MembersFilter(res, p["members"])
 	if err != nil {
 		return []ArtistType{}
 	}
