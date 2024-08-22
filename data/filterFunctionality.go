@@ -150,6 +150,54 @@ func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string)
 	return res, nil
 }
 
+// Get Selected Location
+func GetSelectedLocation(location []string) string {
+	if len(location) == 0 {
+		return ""
+	}
+
+	return location[0]
+}
+
+// Filter Artists Based on locations
+func LocationFilter(artists []ArtistType, locationArr []string) ([]ArtistType, error) {
+	if len(locationArr) == 0 {
+		return artists, nil
+	}
+	location := locationArr[0]
+
+	var locationsHolder struct {
+		Index []struct {
+			LocationsType
+		} `json:"index"`
+	}
+
+	err := funcs.GetAndParse(MainData.Locations, &locationsHolder)
+	if err != nil {
+		return []ArtistType{}, nil
+	}
+
+	theIds := map[int]bool{}
+
+	for _, locStruct := range locationsHolder.Index {
+		for _, loc := range locStruct.Locations {
+			if loc == location {
+				theIds[locStruct.Id] = true
+			}
+		}
+	}
+
+	res := []ArtistType{}
+
+	for _, artist := range artists {
+		if theIds[artist.Id] {
+			res = append(res, artist)
+		}
+	}
+
+	return res, nil
+}
+
 // Filter Artists Used Functions Above
 func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
@@ -163,6 +211,11 @@ func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 	}
 
 	res, err = MembersFilter(res, p["members"])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	res, err = LocationFilter(res, p["location"])
 	if err != nil {
 		return []ArtistType{}
 	}
@@ -199,6 +252,7 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 	//////////////////////////////////////////////////////////
 
 	locations, err := LoadLocations()
+	selectedLocation := GetSelectedLocation(p["location"])
 	if err != nil {
 		return FilterType{}, err
 	}
@@ -223,7 +277,8 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 			MembersChecked: checkedMembers,
 		},
 		LocationsFilter: LocationsFilterType{
-			Locations: locations,
+			Locations:       locations,
+			LocationChecked: selectedLocation,
 		},
 	}, nil
 }

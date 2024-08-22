@@ -59,8 +59,8 @@ type MembersFilterType struct {
 }
 
 type LocationsFilterType struct {
-	Locations        map[string]bool
-	LocationsChecked map[string]bool
+	Locations       map[string]bool
+	LocationChecked string
 }
 
 type FilterType struct {
