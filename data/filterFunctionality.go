@@ -217,3 +217,21 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 		},
 	}, nil
 }
+// location 
+/*func LocationsFilter(slcoflocations []LocationsType,userlocations map[string][]string)  error {
+	validatemap := make(map[string]bool)
+	for _,locations := range slcoflocations {
+		for _,location := range locations.Locations {
+			validatemap[location] = true
+		}
+	}
+	var validlocslc []string
+	for _,location := range userlocations["location"] {
+		if !validatemap[location] {
+			return errors.New("this location aint avaibale")
+		} else {
+			validlocslc = append(validlocslc, location)
+		}
+	}
+
+}*/

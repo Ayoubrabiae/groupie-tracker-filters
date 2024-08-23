@@ -41,6 +41,13 @@
                 </div>
             </div>
 
+            <!-- Locations Filter -->
+            <select name="Locations">
+                {{ range . }}
+                <option value="{{.Locations.Locations}}">{{.Locations.Locations}}</option>
+            {{ end }}  
+            </select>
+
             <!-- Submit Holder -->
             <div class="submit-holder">
                 <a class="reset" href="/">Reset</a>
