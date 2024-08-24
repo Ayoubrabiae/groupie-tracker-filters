@@ -60,10 +60,19 @@ func GetMinMaxFirstAlbum(artists []ArtistType) (map[string]int, error) {
 func GetMinMaxValues(minmax map[string]int, min, max []string) (string, string) {
 	minValue := strconv.Itoa(minmax["min"])
 	maxValue := strconv.Itoa(minmax["max"])
-	if len(min) != 0 {
+
+	if len(min) != 0 && len(max) != 0 {
+		minInt, _ := strconv.Atoi(min[0])
+		maxInt, _ := strconv.Atoi(max[0])
+
+		if minInt > minmax["max"] || minInt < minmax["min"] {
+			return minValue, maxValue
+		}
+		if maxInt > minmax["max"] || maxInt < minmax["min"] {
+			return minValue, maxValue
+		}
+
 		minValue = min[0]
-	}
-	if len(max) != 0 {
 		maxValue = max[0]
 	}
 
@@ -82,28 +91,24 @@ func GetMembersSizes(artists []ArtistType) map[int]bool {
 }
 
 // Get Members Sizes That we check
-func GetCheckedMembers(members []string) (map[int]bool, error) {
+func GetCheckedMembers(members []string) map[int]bool {
 	res := map[int]bool{}
 
 	for _, m := range members {
 		mInt, err := strconv.Atoi(m)
 		if err != nil {
-			return map[int]bool{}, err
+			return map[int]bool{}
 		}
 
 		res[mInt] = true
 	}
 
-	return res, nil
+	return res
 }
 
 // Filter Artists based on members size
 func MembersFilter(artists []ArtistType, membersSizes []string) ([]ArtistType, error) {
 	res := []ArtistType{}
-
-	if len(membersSizes) == 0 {
-		return artists, nil
-	}
 
 	for _, artist := range artists {
 		for _, size := range membersSizes {
@@ -124,25 +129,56 @@ func MembersFilter(artists []ArtistType, membersSizes []string) ([]ArtistType, e
 }
 
 // Help us to filter Artists based on the creation and the first album date
-func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string) ([]ArtistType, error) {
-	res := []ArtistType{}
-
-	if len(minCreaionDate) == 0 || len(maxCreationDate) == 0 {
-		return []ArtistType{}, nil
+func CreationFilter(artists []ArtistType, minCreaionDate, maxCreationDate string) ([]ArtistType, error) {
+	if minCreaionDate == "" || maxCreationDate == "" {
+		return artists, nil
 	}
 
-	min, err := strconv.Atoi(minCreaionDate[0])
+	var res []ArtistType
+
+	min, err := strconv.Atoi(minCreaionDate)
 	if err != nil {
 		return []ArtistType{}, err
 	}
 
-	max, err := strconv.Atoi(maxCreationDate[0])
+	max, err := strconv.Atoi(maxCreationDate)
 	if err != nil {
 		return []ArtistType{}, err
 	}
 
 	for _, item := range artists {
 		if item.CreationDate >= min && item.CreationDate <= max {
+			res = append(res, item)
+		}
+	}
+
+	return res, nil
+}
+
+func FirstAlbumFilter(artists []ArtistType, minFirstAlbum, maxFirstAlbum string) ([]ArtistType, error) {
+	if minFirstAlbum == "" || maxFirstAlbum == "" {
+		return artists, nil
+	}
+
+	var res []ArtistType
+
+	min, err := strconv.Atoi(minFirstAlbum)
+	if err != nil {
+		return []ArtistType{}, err
+	}
+
+	max, err := strconv.Atoi(maxFirstAlbum)
+	if err != nil {
+		return []ArtistType{}, err
+	}
+
+	for _, item := range artists {
+		firstAlbumDate, err := funcs.DateToInt(item.FirstAlbum)
+		if err != nil {
+			return []ArtistType{}, err
+		}
+
+		if firstAlbumDate >= min && firstAlbumDate <= max {
 			res = append(res, item)
 		}
 	}
@@ -160,11 +196,10 @@ func GetSelectedLocation(location []string) string {
 }
 
 // Filter Artists Based on locations
-func LocationFilter(artists []ArtistType, locationArr []string) ([]ArtistType, error) {
-	if len(locationArr) == 0 {
+func LocationFilter(artists []ArtistType, location string) ([]ArtistType, error) {
+	if location == "" {
 		return artists, nil
 	}
-	location := locationArr[0]
 
 	var locationsHolder struct {
 		Index []struct {
@@ -200,24 +235,35 @@ func LocationFilter(artists []ArtistType, locationArr []string) ([]ArtistType, e
 
 // Filter Artists Used Functions Above
 func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
-	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
-	if err != nil {
-		return []ArtistType{}
+	var res []ArtistType = artists
+	var err error
+
+	if len(p["min-creation"]) != 0 && len(p["max-creation"]) != 0 {
+		res, err = CreationFilter(res, p["min-creation"][0], p["max-creation"][0])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["min-first-album"]) != 0 && len(p["max-first-album"]) != 0 {
+		res, err = FirstAlbumFilter(res, p["min-first-album"][0], p["max-first-album"][0])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = MembersFilter(res, p["members"])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["members"]) != 0 {
+		res, err = MembersFilter(res, p["members"])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = LocationFilter(res, p["location"])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["location"]) != 0 {
+		res, err = LocationFilter(res, p["location"][0])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
 	return res
@@ -244,10 +290,7 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 	//////////////////////////////////////////////////////////
 
 	membersSizes := GetMembersSizes(artists)
-	checkedMembers, err := GetCheckedMembers(p["members"])
-	if err != nil {
-		return FilterType{}, err
-	}
+	checkedMembers := GetCheckedMembers(p["members"])
 
 	//////////////////////////////////////////////////////////
 
