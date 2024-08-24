@@ -42,18 +42,27 @@
             </div>
 
             <!-- Locations Filter -->
-            <select name="Locations">
-                {{ range $key, $Value := .Locations }}
-                <option value="{{$key}}">{{$key}}</option>
-            {{ end }}  
-            </select>
-
-            <!-- Submit Holder -->
-            <div class="submit-holder">
-                <a class="reset" href="/">Reset</a>
-                <input type="submit" value="Submit" class="filter-submit">
+             <div class="select-container">
+                    <select name="Locations" class="select-Box">
+                        <option value="" disabled selected>Select A location</option>
+                        {{ range $key, $Value := .Locations }}
+                    <option value="{{$key}}">{{$key}}</option>
+                {{ end }}  
+                </select>
+                    <div class="down-arrow-icon">
+                        <i class='bx bxs-down-arrow'></i>
+                    </div>
             </div>
+            
 
-        </form>
-    </div>
+        <!-- Submit Holder -->
+    <div class="submit-holder">
+        <a class="reset" href="/">Reset</a>
+    <input type="submit" value="Submit" class="filter-submit">
+</div>
+
+</form>
+</div>
+</div>
+</div>
 {{ end }}

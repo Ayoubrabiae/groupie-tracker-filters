@@ -9,24 +9,35 @@ import (
 
 // Filter Artists Used Below
 func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
-	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
-	if err != nil {
-		return []ArtistType{}
+	var res []ArtistType
+	var err error
+	
+	if len(p["min-creation"]) != 0 && len(p["max-creation"]) != 0 {
+		res, err = RangeFilter(artists, p["min-creation"], p["max-creation"])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["min-first-album"]) != 0 && len(p["max-first-album"]) != 0 {
+		res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = MembersFilter(res, p["members"])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["members"]) != 0 {
+		res, err = MembersFilter(res, p["members"])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
-	res, err = LocationsFilter(res, p["Locations"][0])
-	if err != nil {
-		return []ArtistType{}
+	if len(p["Locations"]) != 0 {
+		res, err = LocationsFilter(res, p["Locations"][0])
+		if err != nil {
+			return []ArtistType{}
+		}
 	}
 
 	return res
