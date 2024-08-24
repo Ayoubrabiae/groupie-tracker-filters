@@ -238,15 +238,8 @@ func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 	var res []ArtistType = artists
 	var err error
 
-	if len(p["min-creation"]) != 0 && len(p["max-creation"]) != 0 {
-		res, err = CreationFilter(res, p["min-creation"][0], p["max-creation"][0])
-		if err != nil {
-			return []ArtistType{}
-		}
-	}
-
-	if len(p["min-first-album"]) != 0 && len(p["max-first-album"]) != 0 {
-		res, err = FirstAlbumFilter(res, p["min-first-album"][0], p["max-first-album"][0])
+	if len(p["location"]) != 0 {
+		res, err = LocationFilter(res, p["location"][0])
 		if err != nil {
 			return []ArtistType{}
 		}
@@ -259,8 +252,15 @@ func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
 		}
 	}
 
-	if len(p["location"]) != 0 {
-		res, err = LocationFilter(res, p["location"][0])
+	if len(p["min-creation"]) != 0 && len(p["max-creation"]) != 0 {
+		res, err = CreationFilter(res, p["min-creation"][0], p["max-creation"][0])
+		if err != nil {
+			return []ArtistType{}
+		}
+	}
+
+	if len(p["min-first-album"]) != 0 && len(p["max-first-album"]) != 0 {
+		res, err = FirstAlbumFilter(res, p["min-first-album"][0], p["max-first-album"][0])
 		if err != nil {
 			return []ArtistType{}
 		}
