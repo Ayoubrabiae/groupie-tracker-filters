@@ -206,49 +206,48 @@
     justify-content: center;
 }
 
+
 .members-filter .member-input input {
     display: none;
-}
-.members-filter .member-input label {
-    border: 0.6px solid;
-    padding: 3px 15px;
-    user-select: none;
-    cursor: pointer;
-}
+    }
+    .members-filter .member-input label {
+        border: 0.6px solid;
+        padding: 3px 15px;
+        user-select: none;
+        cursor: pointer;
+        }
+        
+        .members-filter .member-input input:checked + label {
+            background-color: var(--act-color);
+            border-color: var(--act-color);
+            color: var(--bg-color);
+            }
+            
+            .location-filter-item {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
 
-.members-filter .member-input input:checked + label {
-    background-color: var(--act-color);
-    border-color: var(--act-color);
-    color: var(--bg-color);
-}
-
-.select-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    min-width: 250px;
-    height: 50px;
-}
-
-.select-Box {
-    border: none;
-    appearance: none;
-    padding: 0 30 0 15;
-    width: 100%;
-    background-color: var(--act-color);
-    color: black;
-    font-size: 25px;
-    font-weight: 300;
-    text-align: center;
-}
-
-.select-container .down-arrow-icon {
-    width: 50px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #279cd3;
-}
+            .select-Box {
+                width: 100%;
+                height: 50px;
+                border: none;
+                appearance: none;
+                padding: 0 30 0 15;
+                width: 50%;
+                color: black;
+                font-size: 17px;
+                font-weight: bold;
+                text-align: center;
+                font-family: inherit;
+                }
+                .select-Box option {
+                    background-color: var(--act-color);
+                }
+                .location-filter-item .filter-title {
+                    font-size: 22px;
+                    margin-bottom: 20px;
+                }
