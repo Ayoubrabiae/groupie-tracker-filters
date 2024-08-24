@@ -46,7 +46,7 @@
                 <h3 class="filter-title">Locations Filter</h3>
                 <div class="filter-item-container">
                     <select name="location">
-                        <option value="">Select a Location</option>
+                        <option value="none" disabled selected hidden>Select a Location</option>
                         {{ $selectedLocation := .LocationsFilter.LocationChecked }}
                         {{ range $key, $value := .LocationsFilter.Locations }}
                             <option
