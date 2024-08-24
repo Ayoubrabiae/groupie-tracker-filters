@@ -62,6 +62,7 @@ type FilterType struct {
 	CreationFilter   CreationFilterType
 	FirstAlbumFilter FirstAlbumFilterType
 	MembersFilter    MembersFilterType
+	Locations map[string]bool
 }
 
 var (

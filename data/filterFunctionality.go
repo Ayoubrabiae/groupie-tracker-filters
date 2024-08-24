@@ -7,6 +7,31 @@ import (
 	"groupie-tracker/funcs"
 )
 
+// Filter Artists Used Below
+func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
+	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	res, err = MembersFilter(res, p["members"])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	res, err = LocationsFilter(res, p["Locations"][0])
+	if err != nil {
+		return []ArtistType{}
+	}
+
+	return res
+}
+
 // Get min and max creation dates from artists
 func GetMinMaxCreationDate(artists []ArtistType) (map[string]int, error) {
 	res := map[string]int{}
@@ -150,26 +175,6 @@ func RangeFilter(artists []ArtistType, minCreaionDate, maxCreationDate []string)
 	return res, nil
 }
 
-// Filter Artists Used Functions Above
-func FilterArtists(artists []ArtistType, p map[string][]string) []ArtistType {
-	res, err := RangeFilter(artists, p["min-creation"], p["max-creation"])
-	if err != nil {
-		return []ArtistType{}
-	}
-
-	res, err = RangeFilter(res, p["min-first-album"], p["max-first-album"])
-	if err != nil {
-		return []ArtistType{}
-	}
-
-	res, err = MembersFilter(res, p["members"])
-	if err != nil {
-		return []ArtistType{}
-	}
-
-	return res
-}
-
 // Get All Filter Params Like range values and checkbox that we checked
 func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, error) {
 	minmaxCreation, err := GetMinMaxCreationDate(artists)
@@ -197,6 +202,11 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 	}
 
 	//////////////////////////////////////////////////////////
+	locations, err := LoadLocations()
+	if err != nil {
+		return FilterType{}, err
+	}
+	//////////////////////////////////////////////////////////
 
 	return FilterType{
 		CreationFilter: CreationFilterType{
@@ -215,23 +225,43 @@ func GetFilterParams(artists []ArtistType, p map[string][]string) (FilterType, e
 			MembersSizes:   membersSizes,
 			MembersChecked: checkedMembers,
 		},
+		Locations: locations,
 	}, nil
 }
-// location 
-/*func LocationsFilter(slcoflocations []LocationsType,userlocations map[string][]string)  error {
-	validatemap := make(map[string]bool)
-	for _,locations := range slcoflocations {
-		for _,location := range locations.Locations {
-			validatemap[location] = true
-		}
+
+// Filter the Artists Based on there Locations
+func LocationsFilter(artists []ArtistType, userlocation string) ([]ArtistType, error) {
+	res := []ArtistType{}
+	if userlocation == "" {
+		return artists, nil
 	}
-	var validlocslc []string
-	for _,location := range userlocations["location"] {
-		if !validatemap[location] {
-			return errors.New("this location aint avaibale")
-		} else {
-			validlocslc = append(validlocslc, location)
+
+	var artistlocations struct {
+		Index []struct {
+			LocationsType
+		} `json:"index"`
+	}
+	err := funcs.GetAndParse(MainData.Locations, &artistlocations)
+
+	if err != nil {
+		return []ArtistType{}, err
+	}
+
+	locId := make(map[int]bool)
+
+	for _, index := range artistlocations.Index {
+		for _, location := range index.Locations {
+			if location == userlocation {
+				locId[index.Id] = true
+			}
 		}
 	}
 
-}*/
+	for _, artist := range artists {
+		if locId[artist.Id] {
+			res = append(res, artist)
+		}
+	}
+
+	return res, nil
+}

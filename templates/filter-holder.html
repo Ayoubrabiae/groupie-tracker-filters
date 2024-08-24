@@ -43,8 +43,8 @@
 
             <!-- Locations Filter -->
             <select name="Locations">
-                {{ range . }}
-                <option value="{{.Locations.Locations}}">{{.Locations.Locations}}</option>
+                {{ range $key, $Value := .Locations }}
+                <option value="{{$key}}">{{$key}}</option>
             {{ end }}  
             </select>
 

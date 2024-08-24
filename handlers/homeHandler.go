@@ -35,22 +35,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var artists []data.ArtistType
-	var locations []data.LocationsType
 	err = funcs.GetAndParse(data.MainData.Artists, &artists)
 	if err != nil {
 		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
 		return
 	}
-	err = funcs.GetAndParse(data.MainData.Locations, &locations)
-	if err != nil {
-		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
-		return
-	}
-/*	err := data.LocationsFilter(locations, r.URL.Query())
-	if err != nil {
-		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
-		return
-	}*/
+
 	filterParams, err := data.GetFilterParams(artists, r.URL.Query())
 	if err != nil {
 		ErrorHandler(w, "Internal server Error", http.StatusInternalServerError)
@@ -61,14 +51,13 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		artists = data.FilterArtists(artists, r.URL.Query())
 	}
 
+
 	homeData := struct {
 		Artists []data.ArtistType
 		Filter  data.FilterType
-		Locations []data.LocationsType
 	}{
-		Artists: artists,
-		Filter:  filterParams,
-		Locations: locations,
+		Artists:   artists,
+		Filter:    filterParams,
 	}
 
 	err = tmp.Execute(w, homeData)
