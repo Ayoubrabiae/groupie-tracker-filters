@@ -19,9 +19,7 @@
         <div class="container">
             {{if .Artists}}
                 {{ range .Artists }}
-                        {{if ne .Id 21}}
                         {{ template "card" . }}
-                        {{end}}
                 {{ end }}
             {{else}}
                 <p class="filter-error">Sorry We Didn't find any matches</p>
