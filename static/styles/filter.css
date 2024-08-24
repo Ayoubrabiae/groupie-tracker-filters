@@ -222,19 +222,20 @@
             border-color: var(--act-color);
             color: var(--bg-color);
             }
-            
+
+            /*Locations Filter Styling */
             .location-filter-item {
                 display: flex;
                 align-items: center;
                 flex-direction: column;
                 width: 100%;
                 text-align: center;
+                backdrop-filter: brightness(0.9);
             }
 
             .select-Box {
                 width: 100%;
                 height: 50px;
-                border: none;
                 appearance: none;
                 padding: 0 30 0 15;
                 width: 50%;
@@ -243,11 +244,13 @@
                 font-weight: bold;
                 text-align: center;
                 font-family: inherit;
+                margin-bottom: 20px;
+                border: 2px black ;
                 }
                 .select-Box option {
                     background-color: var(--act-color);
                 }
                 .location-filter-item .filter-title {
                     font-size: 22px;
-                    margin-bottom: 20px;
+                    margin: 20px 0;
                 }
