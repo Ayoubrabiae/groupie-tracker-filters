@@ -4,14 +4,12 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"time"
 
 	"groupie-tracker/data"
 	"groupie-tracker/funcs"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	now := time.Now()
 	if r.URL.Path != "/" {
 		ErrorHandler(w, "Page Not Found", http.StatusNotFound)
 		return
@@ -67,6 +65,4 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("When we excute the html", err)
 		return
 	}
-
-	fmt.Println(time.Since(now))
 }
