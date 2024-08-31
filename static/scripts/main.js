@@ -171,7 +171,7 @@ const cardsExitBtn = document.querySelector(".profile #exit")
 
 if (cardsExitBtn) {
     cardsExitBtn.addEventListener("click", () => {
-        if (document.referrer.split("?")[0] != window.location.origin+"/") {
+        if ((document.referrer.split("?")[0] != window.location.origin+"/") || history.length == 1) {
            window.location.assign(window.location.origin)
             return
         }
